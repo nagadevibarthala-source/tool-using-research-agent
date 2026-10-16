@@ -104,10 +104,15 @@ try:
     )[0].strip()
 
     # Find citation numbers used in the answer.
+    
+    
     cited_numbers = sorted({
         int(number)
-        for number in re.findall(r"\[(\d+)\]", answer)
+        for group in re.findall(r"(?:\[|【)([\d,\s]+)(?:\]|】)", answer)
+        for number in re.findall(r"\d+", group)
     })
+
+    
 
     # Print the answer without the model-generated source list.
     print(answer)

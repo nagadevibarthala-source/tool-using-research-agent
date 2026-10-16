@@ -3,21 +3,35 @@ from ddgs import DDGS
 
 
 def search_web(query, max_results=5):
-    """Search the web and return relevant results."""
+    """Search the web and return cleaned, unique search results."""
+
+    if not query or not query.strip():
+        return []
 
     try:
         results = DDGS().text(
-            query,
-            max_results=max_results
+            query.strip(),
+            max_results=max_results,
+            safesearch="moderate"
         )
 
         search_results = []
+        seen_urls = set()
 
         for result in results:
+            title = (result.get("title") or "").strip()
+            url = (result.get("href") or "").strip()
+            snippet = (result.get("body") or "").strip()
+
+            if not title or not url or url in seen_urls:
+                continue
+
+            seen_urls.add(url)
+
             search_results.append({
-                "title": result.get("title", ""),
-                "url": result.get("href", ""),
-                "snippet": result.get("body", "")
+                "title": title,
+                "url": url,
+                "snippet": snippet
             })
 
         return search_results
@@ -25,4 +39,3 @@ def search_web(query, max_results=5):
     except Exception as error:
         print("Search error:", error)
         return []
-      

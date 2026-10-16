@@ -112,14 +112,14 @@ try:
         for number in re.findall(r"\d+", group)
     })
 
-    
-
     # Print the answer without the model-generated source list.
     print(answer)
 
     print("\nSOURCES\n")
 
+    
     valid_citations = 0
+    invalid_citations = []
 
     for number in cited_numbers:
         if 1 <= number <= len(results):
@@ -127,9 +127,17 @@ try:
             print(f"[{number}] {result['title']}")
             print(f"     {result['url']}\n")
             valid_citations += 1
+        else:
+            invalid_citations.append(number)
 
     if valid_citations == 0:
         print("No valid source citations were found.")
+
+    if invalid_citations:
+        print("WARNING: Invalid citation numbers found:")
+        print(", ".join(f"[{number}]" for number in invalid_citations))
+    else:
+        print("Citation number validation passed.")
 
     
 

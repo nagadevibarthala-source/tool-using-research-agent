@@ -1,80 +1,102 @@
 # 🔎 Tool-Using Research Agent
 
-An AI-powered research assistant that searches the web, summarizes relevant information using a Large Language Model (LLM), and provides source links to help users explore answers.
+An AI-powered research assistant built with Python and the Groq API. It searches the web, fetches relevant webpage content, generates research answers with source citations, and checks claims against available evidence.
 
 ## 🚀 Features
 
-- 🔍 Web search using DuckDuckGo
-- 🤖 AI-generated research summaries using the Groq API
-- 🔗 Source URLs for further reading
-- 🧹 Removes duplicate and incomplete search results
-- 🐍 Built with Python
+- 🔍 Web search using DuckDuckGo (`ddgs`)
+- 🤖 LLM-powered research using the Groq API
+- 🧭 Agent decision loop to select the next action
+- 🌐 Fetches relevant webpage content
+- 🔗 Generates answers with source citations
+- ✅ Verifies answer claims against collected evidence
+- 🔢 Validates citation numbers against available sources
+- 🔁 Limits agent actions using a maximum step budget
+- 🧹 Handles duplicate search results
+- 🔐 Loads API credentials from environment variables
 
 ## 🛠️ Tech Stack
 
 - Python
 - Groq API
 - DuckDuckGo Search (`ddgs`)
+- Requests
 - `python-dotenv`
 
 ## ⚙️ How It Works
 
 1. The user enters a research question.
-2. The agent searches the web for relevant information.
-3. Search results are passed to the language model.
-4. The model generates a summary based on the available results.
-5. The response includes source links for further reading.
+2. The agent selects an action, such as searching the web, fetching a webpage, or finishing the research.
+3. Search results are collected and relevant webpages are fetched.
+4. The language model generates an answer using the collected research.
+5. The answer includes source citations and a source list.
+6. A claim-verification step compares answer claims against available evidence.
+7. Citation numbers are checked against the collected sources.
+
+The agent operates within a maximum step budget to limit the number of actions per research task.
 
 ## 📦 Setup Instructions
 
-1. Clone the repository:
+### 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/nagadevibarthala-source/tool-using-research-agent.git
-   ```
+```bash
+git clone https://github.com/nagadevibarthala-source/tool-using-research-agent.git
+cd tool-using-research-agent
+```
 
-2. Open the project folder:
+### 2. Create and activate a virtual environment
 
-   ```bash
-   cd tool-using-research-agent
-   ```
+On Windows:
 
-3. Create and activate a virtual environment on Windows:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
 
-   ```bash
-   python -m venv .venv
-   .venv\Scripts\activate
-   ```
+### 3. Install dependencies
 
-4. Install the required packages:
+```bash
+pip install python-dotenv ddgs groq requests
+```
 
-   ```bash
-   pip install python-dotenv ddgs groq
-   ```
+### 4. Configure your API key
 
-5. Create a `.env` file in the project root and add your own Groq API key:
+Create a `.env` file in the project root:
 
-   ```env
-   GROQ_API_KEY=your_groq_api_key_here
-   ```
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
 
-   Never upload your real API key to GitHub.
+Replace the placeholder with your own Groq API key. Never commit your real API key to GitHub.
 
-6. Run the application:
+### 5. Run the agent
 
-   ```bash
-   python main.py
-   ```
+```bash
+python main.py
+```
 
-7. Enter a research question when prompted.
+Enter a research question when prompted.
 
-## 🔐 Security
+## 🧪 Example Research Questions
 
-API keys and environment files should remain private. The `.env` file is excluded through `.gitignore`.
+- What is Agentic AI and how is it used in automation?
+- How can AI agents automate recruitment for companies?
+- What are the benefits and risks of AI-powered automation?
+
+The agent's results depend on the search results, webpage content, and language model output.
+
+## 🔐 Security and Limitations
+
+- Keep the `.env` file and API key private.
+- Ensure `.env` is excluded through `.gitignore`.
+- Verify important information against the original sources.
+- Claim verification depends on the quality and completeness of the fetched evidence; a supported claim is not a guarantee of truth.
+- Search results and webpages may be incomplete, unavailable, or outdated.
+- The agent uses a finite action budget and may finish before gathering every relevant source.
 
 ## 🎯 Project Goal
 
-This project demonstrates how an AI application can use an external search tool and an LLM together to answer research questions with source links.
+This project demonstrates how an AI agent can use external search and webpage-fetching tools with a large language model to research questions, generate cited answers, and check claims against collected evidence.
 
 ## 👩‍💻 Author
 

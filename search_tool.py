@@ -4,8 +4,9 @@ from ddgs import DDGS
 
 def search_web(query, max_results=5):
     """Search the web and return cleaned, unique search results."""
-
     if not query or not query.strip():
+        return []
+    if not isinstance(max_results, int) or max_results < 1:
         return []
 
     try:

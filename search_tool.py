@@ -46,27 +46,34 @@ from html.parser import HTMLParser
 
 
 class WebpageTextParser(HTMLParser):
-    """Extract readable text from webpage HTML."""
+    """Extract readable text while skipping navigation and non-content elements."""
+
+    SKIP_TAGS = {
+        "script", "style", "noscript", "svg",
+        "nav", "header", "footer", "aside"
+    }
 
     def __init__(self):
         super().__init__()
         self.text_parts = []
-        self.skip_content = False
+        self.skip_tags = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("script", "style", "noscript", "svg"):
-            self.skip_content = True
+        if tag in self.SKIP_TAGS:
+            self.skip_tags.append(tag)
 
     def handle_endtag(self, tag):
-        if tag in ("script", "style", "noscript", "svg"):
-            self.skip_content = False
+        if tag in self.SKIP_TAGS:
+            for i in range(len(self.skip_tags) - 1, -1, -1):
+                if self.skip_tags[i] == tag:
+                    del self.skip_tags[i:]
+                    break
 
     def handle_data(self, data):
-        if not self.skip_content:
+        if not self.skip_tags:
             text = data.strip()
             if text:
                 self.text_parts.append(text)
-
 
 def fetch_webpage_text(url, max_chars=2000):
     """Fetch limited readable text from a webpage."""

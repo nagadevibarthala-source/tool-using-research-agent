@@ -76,6 +76,18 @@ python main.py
 ```
 
 Enter a research question when prompted.
+### 6. Run automated tests
+
+Run the following command from the project root:
+
+```bash
+python -m unittest discover -v
+```
+
+The test suite checks agent decision parsing, invalid actions, search query validation, duplicate search results, URL validation, and webpage response handling.
+
+The tests use mocks where appropriate, so they do not require live Groq API calls.
+
 
 ## 🧪 Example Research Questions
 

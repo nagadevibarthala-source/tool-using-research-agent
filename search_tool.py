@@ -70,7 +70,11 @@ class WebpageTextParser(HTMLParser):
 
 def fetch_webpage_text(url, max_chars=2000):
     """Fetch limited readable text from a webpage."""
+    if not isinstance(url, str) or not url.strip():
+        return ""
 
+    if not url.strip().lower().startswith(("http://", "https://")):
+        return ""
     try:
         response = requests.get(
             url,

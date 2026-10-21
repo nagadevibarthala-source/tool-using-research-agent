@@ -67,7 +67,7 @@ class WebpageTextParser(HTMLParser):
                 self.text_parts.append(text)
 
 
-def fetch_webpage_text(url, max_chars=6000):
+def fetch_webpage_text(url, max_chars=2000):
     """Fetch limited readable text from a webpage."""
 
     try:
